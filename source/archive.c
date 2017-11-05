@@ -56,8 +56,6 @@ void archiveExtractFile(void *buf, size_t size, char *fileToExtract, char *Extra
 			char extractLoc[100];
 			if(strcmp(file, fileToExtract)==0)
 			{
-				printf("File match Found!\n");
-				printf("%s\n",file);
 				sprintf(extractLoc, "%s%s", location, ExtractAs);
 				archive_entry_set_pathname(entry, extractLoc);
 				r = archive_write_header(ext, entry);
