@@ -293,7 +293,7 @@ int main()
 		print("\n\n\n\x1b[1;37mDownloading files\n\n");
 		downloadExtractStep2();
 		consoleClear();
-		printf("\n\x1b[1;37mProccess Finished.\n\nPress \x1b[1;32mStart\x1b[1;37m to exit and enjoy\n");
+		printf("\n\x1b[1;37mProccess Finished.\n\nPress \x1b[1;32mStart\x1b[1;37m to exit.\nConsole will boot to \x1b[1;32mHomebrew Launcher\x1b[1;37m.\nPress \x1b[1;32m(HOME)\x1b[1;37m for return to menu Home.");
 	}
 	end:
 		while(aptMainLoop())

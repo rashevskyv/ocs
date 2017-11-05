@@ -73,8 +73,8 @@ archive.o: d:/work/git/dev/3ds/ocs/source/archive.c \
  c:/devkitPro/libctru/include/3ds/romfs.h \
  c:/devkitPro/libctru/include/3ds/font.h \
  d:/work/git/dev/3ds/ocs/include/archive.h \
- c:/devkitPro/libctru/include/libarchive/archive.h \
- c:/devkitPro/libctru/include/libarchive/archive_entry.h
+ d:/work/git/dev/3ds/ocs/include/libarchive/archive.h \
+ d:/work/git/dev/3ds/ocs/include/libarchive/archive_entry.h
 
 c:/devkitPro/libctru/include/3ds.h:
 
@@ -224,6 +224,6 @@ c:/devkitPro/libctru/include/3ds/font.h:
 
 d:/work/git/dev/3ds/ocs/include/archive.h:
 
-c:/devkitPro/libctru/include/libarchive/archive.h:
+d:/work/git/dev/3ds/ocs/include/libarchive/archive.h:
 
-c:/devkitPro/libctru/include/libarchive/archive_entry.h:
+d:/work/git/dev/3ds/ocs/include/libarchive/archive_entry.h:
