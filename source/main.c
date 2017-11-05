@@ -17,19 +17,19 @@ extern void progressbar(const char *string, double update, double total, bool pr
 
 PrintConsole top, bottom;
 
-#define result(str,ret,steps,step_count) print("Result for %s:",str); \
+#define result(str,ret,steps,step_count) print("\nResult for %s:",str); \
 if(ret == 0) \
 {	\
 	progressbar("Total Progress:", step_count, steps, true);	\
-	printf("\x1b[1;32m"); \
-	print("Success\n");	\
-	printf("\x1b[1;37m"); \
+	printf("\n\x1b[1;32m"); \
+	print("\nSuccess\n");	\
+	printf("\n\x1b[1;37m"); \
 }	\
 else	\
 {	\
-	printf("\x1b[1;31m"); \
-	print("Fail: %08lX\n", ret); \
-	printf("\x1b[1;37m"); \
+	printf("\n\x1b[1;31m"); \
+	print("\nFail: %08lX", ret); \
+	printf("\n\n\x1b[1;37m"); \
 }	
 
 //Code from jsmn example
@@ -43,7 +43,7 @@ int jsoneq(const char *json, jsmntok_t *tok, const char *s) {
 
 char *parseApi(const char *url, const char *format)
 {
-	printf("Parsing JSON to get latest release\n");
+	printf("\nParsing JSON to get latest release\n");
 	Result ret = httpDownloadData(url);
 	jsmn_parser p = {};
 	jsmn_init(&p);
@@ -52,7 +52,7 @@ char *parseApi(const char *url, const char *format)
 	u8* apiReqData = httpRetrieveData();
 	int r = jsmn_parse(&p, (const char *)apiReqData, httpBufSize(), t, sizeof(t) / sizeof(t[0]));
 	if (r < 0) {
-		printf("Failed to parse JSON %d", r);
+		printf("\nFailed to parse JSON %d", r);
 	}
 	bool inassets = false;
 	for (int i = 0; i < r; i++) {
@@ -65,7 +65,7 @@ char *parseApi(const char *url, const char *format)
 				if(strstr(downloadUrl, format) != NULL)
 				{
 					strcpy(returnDownloadUrl, downloadUrl);
-					printf("Downloading the latest release\n");
+					printf("\nDownloading the latest release\n");
 				}		
 			}
 		}
@@ -77,19 +77,19 @@ char *parseApi(const char *url, const char *format)
 void downloadExtractStep1()
 {
 	progressbar("Total Progress:", 0, 5, true);
-	print("Downloading safeb9sinstaller\n");
+	print("\nDownloading safeb9sinstaller\n");
 	Result ret = httpDownloadData(parseApi("https://api.github.com/repos/d0k3/SafeB9SInstaller/releases/latest", ".zip"));//safeb9sinstaller by d0k3
 	result("Safeb9sinstaller Download", ret, 5, 1);
 	archiveExtractFile(httpRetrieveData(), httpBufSize(), "SafeB9SInstaller.bin", "safehaxpayload.bin","/");
 	httpFree();
-	print("Downloading boot9strap\n");
+	print("\nDownloading boot9strap\n");
 	ret = httpDownloadData(parseApi("https://api.github.com/repos/SciresM/boot9strap/releases/latest",".zip"));//b9s by scrisem
 	result("b9s Download", ret, 5, 2);
 	mkdir("/boot9strap",0777);
 	archiveExtractFile(httpRetrieveData(), httpBufSize(), "boot9strap.firm", "boot9strap.firm", "/boot9strap/");
 	archiveExtractFile(httpRetrieveData(), httpBufSize(), "boot9strap.firm.sha", "boot9strap.firm.sha", "/boot9strap/");
 	httpFree();
-	print("Downloading luma\n");
+	print("\nDownloading luma\n");
 	ret = httpDownloadData(parseApi("https://api.github.com/repos/AuroraWright/Luma3DS/releases/latest", ".7z"));//luma by aurorawright
 	result("Luma Download", ret, 5, 3);
 	archiveExtractFile(httpRetrieveData(), httpBufSize(), "boot.firm", "boot.firm", "/");
@@ -126,60 +126,112 @@ void doExploitsStep1()
 }
 
 void downloadExtractStep2()
-{
-	progressbar("Total Progress:", 0, 9, true);
-	print("Downloading and Installing lumaupdater\n");
-	Result ret = httpDownloadData(parseApi("https://api.github.com/repos/KunoichiZ/lumaupdate/releases/latest", ".cia")); //lumaupdater by hamcha & KunoichiZ
-	result("Download", ret, 9, 1);
-	ciaInstall(httpRetrieveData(), httpBufSize(), 9, 1);
+{	
+	progressbar("Total Progress:", 0, 15, true);
+
+// hblauncher_loader
+	// Best time to install hblauncher_loader
+	print("\nDownloading \e[37;42mhblauncher_loader\e[m\n");
+	Result ret = httpDownloadData(parseApi("https://api.github.com/repos/yellows8/hblauncher_loader/releases/latest", ".zip"));//hblauncher_loader by yellows8
+	result("Download", ret, 15, 1);
+	archiveExtractFile(httpRetrieveData(), httpBufSize(), "hblauncher_loader.cia", "hblauncher_loader.cia", "/");
 	httpFree();
-	print("Downloading and Installing DSP1\n");
-	ret = httpDownloadData(parseApi("https://api.github.com/repos/zoogie/DSP1/releases/latest", ".cia"));//DSP1 by zoogie
-	result("Download", ret, 9, 2);
-	ciaInstall(httpRetrieveData(), httpBufSize(), 9, 2);
-	httpFree();
-	print("Downloading and Installing Anemone3DS\n");
-	ret = httpDownloadData(parseApi("https://api.github.com/repos/astronautlevel2/Anemone3DS/releases/latest", ".cia"));//Anemone3ds by AstronaultLevel2
-	result("Download", ret, 9, 3);
-	ciaInstall(httpRetrieveData(), httpBufSize(), 9, 3);
-	httpFree();
-	print("Downloading and Installing FBI\n");
-	ret = httpDownloadData(parseApi("https://api.github.com/repos/steveice10/FBI/releases/latest", ".cia"));//FBI by steveice10
-	result("Download", ret, 9, 4);
-	ciaInstall(httpRetrieveData(), httpBufSize(), 9, 4);
-	httpFree();
-	print("Downloading boot.3dsx\n");
-	ret = httpDownloadData(parseApi("https://api.github.com/repos/fincs/new-hbmenu/releases/latest", ".3dsx"));// By smealum & others
-	result("Download", ret, 9, 5);
+	
+	u32 size;
+	u8 *data = fsOpenAndRead("hblauncher_loader.cia", &size);
+	printf("\nTrying to install hblauncher_loader.cia\n");
+	ciaInstall(data, size, 15, 1);
+	free(data);
+
+// HBL
+	print("\nDownloading \e[37;42mboot.3dsx\e[m\n");
+	ret = httpDownloadData(parseApi("https://api.github.com/repos/fincs/new-hbmenu/releases/latest", ".3dsx"));// HBL by smealum & others
+	result("Download", ret, 15, 2);
 	fsOpenAndWrite("/boot.3dsx",httpRetrieveData(), httpBufSize());
 	httpFree();
-	print("Downloading godmode9\n");
-	ret = httpDownloadData(parseApi("https://api.github.com/repos/d0k3/GodMode9/releases/latest", ".zip"));// By d0k3
-	result("Download", ret, 9, 6);
+	
+// FBI
+	print("\nDownloading and Installing \e[37;42mFBI\e[m\n");
+	ret = httpDownloadData(parseApi("https://api.github.com/repos/steveice10/FBI/releases/latest", ".cia"));//FBI by steveice10
+	result("Download", ret, 15, 3);
+	ciaInstall(httpRetrieveData(), httpBufSize(), 15, 3);
+	httpFree();
+	
+// lumaupdater
+	print("\nDownloading and Installing \e[37;42mlumaupdater\e[m\n");
+	ret = httpDownloadData(parseApi("https://api.github.com/repos/KunoichiZ/lumaupdate/releases/latest", ".cia")); //lumaupdater by hamcha & KunoichiZ
+	result("Download", ret, 15, 4);
+	ciaInstall(httpRetrieveData(), httpBufSize(), 15, 4);
+	httpFree();
+	
+// luma3ds data
+	print("\nDownloading \e[37;42mluma3ds data\e[m\n");
+	remove("/luma/config.bin");
+	ret = httpDownloadData("https://github.com/rashevskyv/3ds/raw/master/files/luma.zip");
+	result("Download", ret, 15, 5);
+	archiveExtractFile(httpRetrieveData(), httpBufSize(), "__ALL__", "__NOTUSED__", "__NOTUSED__");
+	httpFree();
+	
+// godmode9 and sripts
+	print("\nDownloading \e[37;42mgodmode9\e[m\n");
+	ret = httpDownloadData(parseApi("https://api.github.com/repos/d0k3/GodMode9/releases/latest", ".zip"));// godmode9 by d0k3
+	result("Download", ret, 15, 6);
 	mkdir("/luma/payloads", 0777);
 	mkdir("/gm9",0777);
 	mkdir("/gm9/scripts", 0777);
 	archiveExtractFile(httpRetrieveData(), httpBufSize(), "__ALL__", "__NOTUSED__", "__NOTUSED__");
 	archiveExtractFile(httpRetrieveData(), httpBufSize(), "GodMode9.firm", "GodMode9.firm", "/luma/payloads/"); 
-	print("Downloading godmode9 sd card cleaup script\n");
-	ret = httpDownloadData("http://3ds.guide/gm9_scripts/cleanup_sd_card.gm9"); //By d0k3
-	result("Download", ret, 9, 7);
+	
+	print("\nDownloading \e[37;42mgodmode9 sd card cleaup script\e[m\n");
+	ret = httpDownloadData("http://3ds.guide/gm9_scripts/cleanup_sd_card.gm9"); //cleanup_sd_card.gm9 by d0k3
+	result("Download", ret, 15, 7);
 	fsOpenAndWrite("/gm9/scripts/cleanup_sd_card.gm9", httpRetrieveData(), httpBufSize());
-	print("Downloading godmode9 ctr-nand luma script\n");
-	ret = httpDownloadData("http://3ds.guide/gm9_scripts/setup_ctrnand_luma3ds.gm9"); //By d0k3
-	result("Download", ret, 9, 8);
+	
+	print("\nDownloading godmode9 ctr-nand luma script\n");
+	ret = httpDownloadData("http://3ds.guide/gm9_scripts/setup_ctrnand_luma3ds.gm9"); //setup_ctrnand_luma3ds by d0k3
+	result("Download", ret, 15, 8);
 	fsOpenAndWrite("/gm9/scripts/setup_ctrnand_luma3ds.gm9", httpRetrieveData(), httpBufSize());
-	//Best time to install hblauncher_loader
-	print("Downloading hblauncher_loader\n");
-	ret = httpDownloadData(parseApi("https://api.github.com/repos/yellows8/hblauncher_loader/releases/latest", ".zip"));//hblauncher_loader by yellows8
-	result("Download", ret, 9, 9);
-	archiveExtractFile(httpRetrieveData(), httpBufSize(), "hblauncher_loader.cia", "hblauncher_loader.cia", "/");
+	
+// 3DSident
+	print("\nDownloading and Installing \e[37;42m3DSident\e[m\n");
+	ret = httpDownloadData(parseApi("https://api.github.com/repos/joel16/3DSident/releases/latest", "3DSident.cia"));//3DSident by joel16
+	result("Download", ret, 15, 9);
+	ciaInstall(httpRetrieveData(), httpBufSize(), 15, 9);
 	httpFree();
-	u32 size;
-	u8 *data = fsOpenAndRead("/hblauncher_loader.cia", &size);
-	printf("Trying to install hblauncher_loader.cia\n");
-	ciaInstall(data, size, 9, 9);
+	
+// Checkpoint
+	print("\nDownloading and Installing \e[37;42mCheckpoint\e[m\n");
+	ret = httpDownloadData(parseApi("https://api.github.com/repos/BernardoGiordano/Checkpoint/releases/latest", ".cia"));//Checkpoint by BernardoGiordano
+	result("Download", ret, 15, 10);
+	ciaInstall(httpRetrieveData(), httpBufSize(), 15, 11);
+	httpFree();
+	
+// Themely
+	print("\nDownloading and Installing \e[37;42mThemely\e[m\n");
+	ret = httpDownloadData(parseApi("https://api.github.com/repos/ErmanSayin/Themely/releases/latest", ".cia"));//Themely by ErmanSayin
+	result("Download", ret, 15, 12);
+	ciaInstall(httpRetrieveData(), httpBufSize(), 15, 12);
+	httpFree();
+	
+// freeshop
+	print("\nDownloading \e[37;42mfreeshop\e[m\n");
+	ret = httpDownloadData("https://github.com/rashevskyv/3ds/raw/master/files/freeshop.zip");
+	result("Download", ret, 15, 13);
+	mkdir("/cias", 0777);
+	archiveExtractFile(httpRetrieveData(), httpBufSize(), "freeshop.cia", "freeshop.cia", "/cias/");
+	httpFree();
+	data = fsOpenAndRead("/cias/freeshop.cia", &size);
+	printf("\nTrying to install freeshop\n");
+	ciaInstall(data, size, 15, 14);
 	free(data);
+
+// freeshop data
+	print("\nDownloading \e[37;42mfreeshop data\e[m\n");
+	ret = httpDownloadData("https://github.com/rashevskyv/3ds/raw/master/files/freeShop_data.zip");
+	result("Download", ret, 15, 15);
+	archiveExtractFile(httpRetrieveData(), httpBufSize(), "__ALL__", "__NOTUSED__", "__NOTUSED__");
+	httpFree();
+					
 }
 
 int main()
@@ -190,13 +242,13 @@ int main()
 	consoleInit(GFX_TOP, &top);
 	consoleInit(GFX_BOTTOM, &bottom);
 	consoleSelect(&bottom);
-	printf("\x1b[1;37m");
-	printf("Welcome to \x1b[1mOCS!!\x1b[0m\nMade by:- \x1b[1;32mKartik\x1b[1;37m\nSpecial Thanks to :-\n\x1b[1;33mChromaryu\x1b[1;37m:- For Testing\n\x1b[1;35mSmealum\x1b[1;37m and \x1b[1;33myellows8\x1b[1;37m:- For udsploit\n\x1b[1;36mTinivi\x1b[1;37m for safehax");
+	printf("\n\x1b[1;37m");
+	printf("\nWelcome to \x1b[1mOCS!!\x1b[0m\nMade by:- \x1b[1;32mKartik\x1b[1;37m\nSpecial Thanks to :-\n\x1b[1;33mChromaryu\x1b[1;37m:- For Testing\n\x1b[1;35mSmealum\x1b[1;37m and \x1b[1;33myellows8\x1b[1;37m:- For udsploit\n\x1b[1;36mTinivi\x1b[1;37m for safehax");
 	consoleSelect(&top);
-	printf("\x1b[1;37m");
+	printf("\n\x1b[1;37m");
 	bool cfwflag = false;
 	acWaitInternetConnection();
-	printf("Press A to begin\n");
+	printf("\nPress A to begin\n");
 	while(aptMainLoop())
 		{
 			hidScanInput();
@@ -205,30 +257,30 @@ int main()
 				break;
 
 		}
-	printf("Checking if cfw is installed\n");
+	printf("\nChecking if cfw is installed\n");
 	Result ret = checkRunningCFW();
 	(ret == 0xF8C007F4) ? (cfwflag = false) : (cfwflag = true);
 	consoleSelect(&top);
 	httpcInit(0);
 	if(cfwflag == false)
 	{
-		printf("Not running cfw\n");
+		printf("\nNot running cfw\n");
 		if(checkFileExists("/safehaxpayload.bin") == 0) //check if files already exsist for step 1.
 		{	
-			print("Downloading files for CFW installation\n");
+			print("\nDownloading files for CFW installation\n");
 			downloadExtractStep1();
 		}	
-		printf("Running exploits\n");
+		printf("\nRunning exploits\n");
 		doExploitsStep1();
 	}
 	else
 	{
 		//User is running luma cfw
-		printf("Running cfw\n");
-		print("Downloading files for Step 2...\n");
+		printf("\n\x1b[1;32mYou running CFW\n\x1b[1;37m");
+		print("\n\nDownloading files\n\n");
 		//parseApi("https://api.github.com/repos/pirater12/ocs/releases/latest");
 		downloadExtractStep2();
-		printf("Proccess Finished. Press Start to exit and enjoy\n");
+		printf("\nProccess Finished. Press Start to exit and enjoy\n");
 	}
 	end:
 		while(aptMainLoop())
@@ -242,4 +294,5 @@ int main()
 	httpcExit();
 	logExit();
 	gfxExit();
+		
 }
