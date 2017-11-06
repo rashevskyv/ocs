@@ -329,7 +329,7 @@ CFGU_SecureInfoGetRegion(&region);
 	else if (region == 1) {
 	// USA tickets
 		print("\n\n\x1b[1;37mDownloading \e[37;42mtickets for USA themes\e[m\n");
-		Result ret = httpDownloadData("http://3ds.titlekeys.gq/ticket/0004008c00008f00");
+		Result ret = httpDownloadData("http://3ds.titlekeys.gq/ticket/0004008c00008f01");
 		result("Download", ret, 14, 14);
 		tikInstall(httpRetrieveData(), httpBufSize(), 14, 14);
 		httpFree();
