@@ -72,7 +72,7 @@ fs.o: d:/work/git/dev/3ds/ocs/source/fs.c \
  c:/devkitPro/libctru/include/3ds/sdmc.h \
  c:/devkitPro/libctru/include/3ds/romfs.h \
  c:/devkitPro/libctru/include/3ds/font.h \
- d:/work/git/dev/3ds/ocs/include/fs.h
+ d:/work/git/dev/3ds/ocs/source/fs.h
 
 c:/devkitPro/libctru/include/3ds.h:
 
@@ -220,4 +220,4 @@ c:/devkitPro/libctru/include/3ds/romfs.h:
 
 c:/devkitPro/libctru/include/3ds/font.h:
 
-d:/work/git/dev/3ds/ocs/include/fs.h:
+d:/work/git/dev/3ds/ocs/source/fs.h:

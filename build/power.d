@@ -1,4 +1,5 @@
-main.o: d:/work/git/dev/3ds/ocs/source/main.c \
+power.o: d:/work/git/dev/3ds/ocs/source/power.c \
+ d:/work/git/dev/3ds/ocs/include/power.h \
  c:/devkitPro/libctru/include/3ds.h \
  c:/devkitPro/libctru/include/3ds/types.h \
  c:/devkitPro/libctru/include/3ds/result.h \
@@ -72,14 +73,9 @@ main.o: d:/work/git/dev/3ds/ocs/source/main.c \
  c:/devkitPro/libctru/include/3ds/sdmc.h \
  c:/devkitPro/libctru/include/3ds/romfs.h \
  c:/devkitPro/libctru/include/3ds/font.h \
- d:/work/git/dev/3ds/ocs/include/kernel.h \
- d:/work/git/dev/3ds/ocs/include/asm.h \
- d:/work/git/dev/3ds/ocs/include/exploits.h \
- d:/work/git/dev/3ds/ocs/include/archive.h \
- d:/work/git/dev/3ds/ocs/include/log.h \
- d:/work/git/dev/3ds/ocs/include/httpc.h \
- d:/work/git/dev/3ds/ocs/source/fs.h \
- d:/work/git/dev/3ds/ocs/include/jsmn.h
+ d:/work/git/dev/3ds/ocs/source/screenshot.h
+
+d:/work/git/dev/3ds/ocs/include/power.h:
 
 c:/devkitPro/libctru/include/3ds.h:
 
@@ -227,18 +223,4 @@ c:/devkitPro/libctru/include/3ds/romfs.h:
 
 c:/devkitPro/libctru/include/3ds/font.h:
 
-d:/work/git/dev/3ds/ocs/include/kernel.h:
-
-d:/work/git/dev/3ds/ocs/include/asm.h:
-
-d:/work/git/dev/3ds/ocs/include/exploits.h:
-
-d:/work/git/dev/3ds/ocs/include/archive.h:
-
-d:/work/git/dev/3ds/ocs/include/log.h:
-
-d:/work/git/dev/3ds/ocs/include/httpc.h:
-
-d:/work/git/dev/3ds/ocs/source/fs.h:
-
-d:/work/git/dev/3ds/ocs/include/jsmn.h:
+d:/work/git/dev/3ds/ocs/source/screenshot.h:
