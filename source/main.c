@@ -236,15 +236,21 @@ void downloadExtractStep2()
 	mkdir("/gm9",0777);
 	mkdir("/gm9/scripts", 0777);
 	archiveExtractFile(httpRetrieveData(), httpBufSize(), "GodMode9.firm", "GodMode9.firm", "/luma/payloads/"); 
+	
 	print("\n\n\x1b[1;37mDownloading \e[37;42mgodmode9 sd card cleaup script\e[m\n");
-	ret = httpDownloadData("http://3ds.guide/gm9_scripts/cleanup_sd_card.gm9"); //cleanup_sd_card.gm9 by d0k3
+	ret = httpDownloadData("https://raw.githubusercontent.com/rashevskyv/3ds/master/gm9_scripts/cleanup_sd_card.gm9"); //cleanup_sd_card.gm9 by d0k3
 	result("Download", ret, 14, 7);
 	fsOpenAndWrite("/gm9/scripts/cleanup_sd_card.gm9", httpRetrieveData(), httpBufSize());
 	
 	print("\n\n\x1b[1;37mDownloading \e[37;42mgodmode9 ctr-nand luma script\e[m\n");
-	ret = httpDownloadData("http://3ds.guide/gm9_scripts/setup_ctrnand_luma3ds.gm9"); //setup_ctrnand_luma3ds by d0k3
+	ret = httpDownloadData("https://raw.githubusercontent.com/rashevskyv/3ds/master/gm9_scripts/setup_ctrnand_luma3ds.gm9"); //setup_ctrnand_luma3ds by d0k3
 	result("Download", ret, 14, 8);
 	fsOpenAndWrite("/gm9/scripts/setup_ctrnand_luma3ds.gm9", httpRetrieveData(), httpBufSize());
+	
+	print("\n\n\x1b[1;37mDownloading \e[37;42mBackup_SysNAND script\e[m\n");
+	ret = httpDownloadData("https://raw.githubusercontent.com/rashevskyv/3ds/master/gm9_scripts/Backup_SysNAND.gm9"); //setup_ctrnand_luma3ds by d0k3
+	result("Download", ret, 14, 8);
+	fsOpenAndWrite("/gm9/scripts/Backup_SysNAND.gm9", httpRetrieveData(), httpBufSize());
 
 /*
 // OCS
