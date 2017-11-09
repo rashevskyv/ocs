@@ -10,7 +10,7 @@ Nothing much is needed to use this, you just need to be between firmware 9.0.0 a
 # Features
 
 * Nothing more than 3 files are needed on your sd card.
-* Installs FBI, DSP1, GodMode9, Themely, Checkpoint, lumaupdater and freeshop with keys
+* Installs FBI, GodMode9, Themely, Checkpoint, lumaupdater and freeshop with keys
 * Stock to luma3ds within 5 minutes.
 * Inbuilt zip and 7z extractor using libarchive.
 * Install tickets for eshop themes for you region
