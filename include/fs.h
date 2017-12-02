@@ -1,9 +1,13 @@
 #include <3ds.h>
+#include <stdbool.h>
+#include <stdio.h>
+#include <sys/stat.h>
 
-void fsOpenAndWrite(const char *location, void *data, size_t size);
+FS_Archive sdmcArchive;
 
-Result fsOpenAndWriteNAND(const char *location, void *data, size_t size);
-
-u8 *fsOpenAndRead(const char *location, u32 *readSize);
-
-Result checkFileExists(const char *location);
+void openSdArchive();
+void closeSdArchive();
+int makeDir(const char * path);
+bool fileExists(char * path);
+bool dirExists(const char * path);
+bool deleteFile(const char *path);
