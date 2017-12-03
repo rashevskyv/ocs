@@ -183,55 +183,55 @@ void doExploitsStep1()
 
 void downloadExtractStep2()
 {	
-	progressbar("Total Progress:", 0, 14, true);
+	progressbar("Total Progress:", 0, 15, true);
 	
 // hblauncher_loader
 	print("\n\n\x1b[1;37mDownloading \e[37;42mhblauncher_loader\e[m\n");
 	Result ret = httpDownloadData(parseApi("https://api.github.com/repos/yellows8/hblauncher_loader/releases/latest", ".zip"));//hblauncher_loader by yellows8
-	result("Download", ret, 14, 1);
+	result("Download", ret, 15, 1);
 	archiveExtractFile(httpRetrieveData(), httpBufSize(), "hblauncher_loader.cia", "hblauncher_loader.cia", "/");
 	httpFree();
 	
 	u32 size;
 	u8 *data = fsOpenAndRead("hblauncher_loader.cia", &size);
 	printf("\nTrying to install hblauncher_loader.cia\n");
-	ciaInstall(data, size, 14, 1);
+	ciaInstall(data, size, 15, 1);
 	remove("hblauncher_loader.cia");
 	free(data);
 
 // HBL
 	print("\n\n\x1b[1;37mDownloading \e[37;42mboot.3dsx\e[m\n");
 	ret = httpDownloadData(parseApi("https://api.github.com/repos/fincs/new-hbmenu/releases/latest", ".3dsx"));// HBL by smealum & others
-	result("Download", ret, 14, 2);
+	result("Download", ret, 15, 2);
 	fsOpenAndWrite("/boot.3dsx",httpRetrieveData(), httpBufSize());
 	httpFree();
 	
 // FBI
 	print("\n\n\x1b[1;37mDownloading and Installing \e[37;42mFBI\e[m\n");
 	ret = httpDownloadData(parseApi("https://api.github.com/repos/steveice10/FBI/releases/latest", ".cia"));//FBI by steveice10
-	result("Download", ret, 14, 3);
-	ciaInstall(httpRetrieveData(), httpBufSize(), 14, 3);
+	result("Download", ret, 15, 3);
+	ciaInstall(httpRetrieveData(), httpBufSize(), 15, 3);
 	httpFree();
 	
 // lumaupdater
 	print("\n\n\x1b[1;37mDownloading and Installing \e[37;42mlumaupdater\e[m\n");
 	ret = httpDownloadData(parseApi("https://api.github.com/repos/KunoichiZ/lumaupdate/releases/latest", ".cia")); //lumaupdater by hamcha & KunoichiZ
-	result("Download", ret, 14, 4);
-	ciaInstall(httpRetrieveData(), httpBufSize(), 14, 4);
+	result("Download", ret, 15, 4);
+	ciaInstall(httpRetrieveData(), httpBufSize(), 15, 4);
 	httpFree();
 	
 // luma3ds data
 	print("\n\n\x1b[1;37mDownloading \e[37;42mluma3ds data\e[m\n");
 	remove("/luma/config.bin");
 	ret = httpDownloadData("https://github.com/rashevskyv/3ds/raw/master/files/luma.zip");
-	result("Download", ret, 14, 5);
+	result("Download", ret, 15, 5);
 	archiveExtractFile(httpRetrieveData(), httpBufSize(), "__ALL__", "__NOTUSED__", "__NOTUSED__");
 	httpFree();
 	
 // godmode9 and sripts
 	print("\n\n\x1b[1;37mDownloading \e[37;42mgodmode9\e[m\n");
 	ret = httpDownloadData(parseApi("https://api.github.com/repos/d0k3/GodMode9/releases/latest", ".zip"));// godmode9 by d0k3
-	result("Download", ret, 14, 6);
+	result("Download", ret, 15, 6);
 	mkdir("/luma/payloads", 0777);
 	mkdir("/gm9",0777);
 	mkdir("/gm9/scripts", 0777);
@@ -239,28 +239,35 @@ void downloadExtractStep2()
 	
 	print("\n\n\x1b[1;37mDownloading \e[37;42mgodmode9 sd card cleaup script\e[m\n");
 	ret = httpDownloadData("https://raw.githubusercontent.com/rashevskyv/3ds/master/gm9_scripts/cleanup_sd_card.gm9"); //cleanup_sd_card.gm9 by d0k3
-	result("Download", ret, 14, 7);
+	result("Download", ret, 15, 7);
 	fsOpenAndWrite("/gm9/scripts/cleanup_sd_card.gm9", httpRetrieveData(), httpBufSize());
 	
 	print("\n\n\x1b[1;37mDownloading \e[37;42mgodmode9 ctr-nand luma script\e[m\n");
 	ret = httpDownloadData("https://raw.githubusercontent.com/rashevskyv/3ds/master/gm9_scripts/setup_ctrnand_luma3ds.gm9"); //setup_ctrnand_luma3ds by d0k3
-	result("Download", ret, 14, 8);
+	result("Download", ret, 15, 8);
 	fsOpenAndWrite("/gm9/scripts/setup_ctrnand_luma3ds.gm9", httpRetrieveData(), httpBufSize());
 	
 	print("\n\n\x1b[1;37mDownloading \e[37;42mBackup_SysNAND script\e[m\n");
 	ret = httpDownloadData("https://raw.githubusercontent.com/rashevskyv/3ds/master/gm9_scripts/Backup_SysNAND.gm9"); //setup_ctrnand_luma3ds by d0k3
-	result("Download", ret, 14, 8);
+	result("Download", ret, 15, 8);
 	fsOpenAndWrite("/gm9/scripts/Backup_SysNAND.gm9", httpRetrieveData(), httpBufSize());
 
 /*
 // OCS
 	print("\n\n\x1b[1;37mDownloading and Installing \e[37;42mOCS\e[m\n");
 	ret = httpDownloadData(parseApi("https://api.github.com/repos/rashevskyv/ocs/releases/latest", ".3dsx"));//OCS
-	result("Download", ret, 14, 9);
+	result("Download", ret, 15, 9);
 	mkdir("/3ds",0777);
 	fsOpenAndWrite("/3ds/ocs.3dsx", httpRetrieveData(), httpBufSize());
 	httpFree();
 */
+
+// ftpd
+	print("\n\n\x1b[1;37mDownloading and Installing \e[37;42mftpd\e[m\n");
+	ret = httpDownloadData("https://mtheall.com/~mtheall/ftpd.cia"); //ftpd by mtheall
+	result("Download", ret, 15, 9);
+	ciaInstall(httpRetrieveData(), httpBufSize(), 15, 9);
+	httpFree();
 
 // LumaLocaleSwitcher
 CFGU_SecureInfoGetRegion(&region);
@@ -268,41 +275,41 @@ CFGU_SecureInfoGetRegion(&region);
 
 		print("\n\n\x1b[1;37mDownloading and Installing \e[37;42mLumaLocaleSwitcher\e[m\n");
 		Result ret = httpDownloadData(parseApi("https://api.github.com/repos/Possum/LumaLocaleSwitcher/releases/latest", "NIGHTLY.cia"));//LumaLocaleSwitcher by Possum
-		result("Download", ret, 14, 9);
-		ciaInstall(httpRetrieveData(), httpBufSize(), 14, 9);
+		result("Download", ret, 15, 10);
+		ciaInstall(httpRetrieveData(), httpBufSize(), 15, 10);
 		httpFree();
 		}
 
 // Checkpoint
 	print("\n\n\x1b[1;37mDownloading and Installing \e[37;42mCheckpoint\e[m\n");
 	ret = httpDownloadData(parseApi("https://api.github.com/repos/BernardoGiordano/Checkpoint/releases/latest", ".cia"));//Checkpoint by BernardoGiordano
-	result("Download", ret, 14, 10);
-	ciaInstall(httpRetrieveData(), httpBufSize(), 14, 10);
+	result("Download", ret, 15, 11);
+	ciaInstall(httpRetrieveData(), httpBufSize(), 15, 11);
 	httpFree();
 	
 // Themely
 	print("\n\n\x1b[1;37mDownloading and Installing \e[37;42mThemely\e[m\n");
 	ret = httpDownloadData(parseApi("https://api.github.com/repos/ErmanSayin/Themely/releases/latest", ".cia"));//Themely by ErmanSayin
-	result("Download", ret, 14, 11);
-	ciaInstall(httpRetrieveData(), httpBufSize(), 14, 11);
+	result("Download", ret, 15, 12);
+	ciaInstall(httpRetrieveData(), httpBufSize(), 15, 12);
 	httpFree();
 
 // freeshop
 	print("\n\n\x1b[1;37mDownloading \e[37;42mfreeshop\e[m\n");
 	ret = httpDownloadData("https://github.com/rashevskyv/3ds/raw/master/files/freeshop.zip");
-	result("Download", ret, 14, 12);
+	result("Download", ret, 15, 13);
 	archiveExtractFile(httpRetrieveData(), httpBufSize(), "freeshop.cia", "freeshop.cia", "/");
 	httpFree();
 	data = fsOpenAndRead("freeshop.cia", &size);
 	printf("\nTrying to install freeshop\n");
-	ciaInstall(data, size, 14, 12);
+	ciaInstall(data, size, 15, 13);
 	remove("freeshop.cia");
 	free(data);
 	
 // freeshop data
 	print("\n\n\x1b[1;37mDownloading \e[37;42mfreeshop data\e[m\n");
 	ret = httpDownloadData("https://github.com/rashevskyv/3ds/raw/master/files/freeShop_data.zip");
-	result("Download", ret, 14, 13);
+	result("Download", ret, 15, 14);
 	archiveExtractFile(httpRetrieveData(), httpBufSize(), "__ALL__", "__NOTUSED__", "__NOTUSED__");
 	httpFree();
 
@@ -313,55 +320,54 @@ CFGU_SecureInfoGetRegion(&region);
 	// EUR tickets
 		print("\n\n\x1b[1;37mDownloading \e[37;42mtickets for EUR themes\e[m\n");
 		Result ret = httpDownloadData("http://3ds.titlekeys.gq/ticket/0004008c00009800");
-		result("Download", ret, 14, 14);
-		tikInstall(httpRetrieveData(), httpBufSize(), 14, 14);
+		result("Download", ret, 15, 15);
+		tikInstall(httpRetrieveData(), httpBufSize(), 15, 15);
 		httpFree();
 		
 		ret = httpDownloadData("http://3ds.titlekeys.gq/ticket/0004008c00009801");
-		result("Download", ret, 14, 14);
-		tikInstall(httpRetrieveData(), httpBufSize(), 14, 14);
+		result("Download", ret, 15, 15);
+		tikInstall(httpRetrieveData(), httpBufSize(), 15, 15);
 		httpFree();
 
 		ret = httpDownloadData("http://3ds.titlekeys.gq/ticket/0004008c00009802");
-		result("Download", ret, 14, 14);
-		tikInstall(httpRetrieveData(), httpBufSize(), 14, 14);
+		result("Download", ret, 15, 15);
+		tikInstall(httpRetrieveData(), httpBufSize(), 15, 15);
 		httpFree();
 
 		ret = httpDownloadData("http://3ds.titlekeys.gq/ticket/0004008c00009803");
-		result("Download", ret, 14, 14);
-		tikInstall(httpRetrieveData(), httpBufSize(), 14, 14);
+		result("Download", ret, 15, 15);
+		tikInstall(httpRetrieveData(), httpBufSize(), 15, 15);
 		httpFree();
 	}
 	else if (region == 1) {
 	// USA tickets
 		print("\n\n\x1b[1;37mDownloading \e[37;42mtickets for USA themes\e[m\n");
 		Result ret = httpDownloadData("http://3ds.titlekeys.gq/ticket/0004008c00008f01");
-		result("Download", ret, 14, 14);
-		tikInstall(httpRetrieveData(), httpBufSize(), 14, 14);
+		result("Download", ret, 15, 15);
+		tikInstall(httpRetrieveData(), httpBufSize(), 15, 15);
 		httpFree();
 	}
 	else if (region == 0) {
 	// JAP tickets
 		print("\n\n\x1b[1;37mDownloading \e[37;42mtickets for JAP themes\e[m\n");
 		Result ret = httpDownloadData("http://3ds.titlekeys.gq/ticket/0004008c00008201");
-		result("Download", ret, 14, 14);
-		tikInstall(httpRetrieveData(), httpBufSize(), 14, 14);
+		result("Download", ret, 15, 15);
+		tikInstall(httpRetrieveData(), httpBufSize(), 15, 15);
 		httpFree();
 		
 		ret = httpDownloadData("http://3ds.titlekeys.gq/ticket/0004008c00008202");
-		result("Download", ret, 14, 14);
-		tikInstall(httpRetrieveData(), httpBufSize(), 14, 14);
+		result("Download", ret, 15, 15);
+		tikInstall(httpRetrieveData(), httpBufSize(), 15, 15);
 		httpFree();
 
 		ret = httpDownloadData("http://3ds.titlekeys.gq/ticket/0004008c00008203");
-		result("Download", ret, 14, 14);
-		tikInstall(httpRetrieveData(), httpBufSize(), 14, 14);
+		result("Download", ret, 15, 15);
+		tikInstall(httpRetrieveData(), httpBufSize(), 15, 15);
 		httpFree();
 	}
 	else {
 		printf("skip installing tickets");
 	}
-
 }
 
 int main()
@@ -376,7 +382,7 @@ int main()
 	consoleInit(GFX_BOTTOM, &bottom);
 	consoleSelect(&bottom);
 	printf("\n\x1b[1;37m");
-	printf("\nWelcome to OCS for pirates!!!\nv 2.5.0\n\nMade by: \x1b[1;32mKartik\x1b[1;37m\nModified by: \x1b[1;32mxHR\x1b[1;37m\nfor\x1b[1;33m http://vk.com/3ds_cfw\x1b[1;37m\n\nSpecial Thanks to :\x1b[1;33m\nChromaryu\x1b[1;37m for testing\n\x1b[1;35mSmealum\x1b[1;37m and \x1b[1;33myellows8\x1b[1;37m for udsploit\n\x1b[1;36mTinivi\x1b[1;37m for safehax");
+	printf("\nWelcome to OCS for pirates!!!\nv 2.5.1\n\nMade by: \x1b[1;32mKartik\x1b[1;37m\nModified by: \x1b[1;32mxHR\x1b[1;37m\nfor\x1b[1;33m http://vk.com/3ds_cfw\x1b[1;37m\n\nSpecial Thanks to :\x1b[1;33m\nChromaryu\x1b[1;37m for testing\n\x1b[1;35mSmealum\x1b[1;37m and \x1b[1;33myellows8\x1b[1;37m for udsploit\n\x1b[1;36mTinivi\x1b[1;37m for safehax");
 	consoleSelect(&top);
 	printf("\n\x1b[1;37m");
 	bool cfwflag = false;
