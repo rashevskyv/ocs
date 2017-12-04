@@ -16,33 +16,95 @@ u8 region = 0;
 
 extern void progressbar(const char *string, double update, double total, bool progBarTotal);
 
+void initServices()
+{
+	// acInit();
+	gfxInitDefault();
+	logInit();
+	cfguInit();
+	cfgsInit();
+	ptmuInit();
+	amInit();
+	amAppInit();
+	psInit();
+	aptInit();
+	hidInit();
+	actInit();
+	socInit((u32*)memalign(0x1000, 0x10000), 0x10000);
+	fsInit();
+	sdmcInit();
+	
+	if (isN3DS())
+		osSetSpeedupEnable(true);
+}
+
+void termServices()
+{
+	if (isN3DS())
+		osSetSpeedupEnable(false);
+	
+	sdmcExit();
+	fsExit();
+	httpcExit();
+	logExit();
+	gfxExit();
+	socExit();
+	actExit();
+	hidExit();
+	aptExit();
+	psExit();
+	acExit();
+	amExit();
+	ptmuExit();
+	cfgsExit();
+	cfguExit();
+}
+
+char * getVersion(int version)
+{
+	char *str_kernel = (char *)malloc(sizeof(char) * 255), *str_ver = (char *)malloc(sizeof(char) * 255), *str_sysver = (char *)malloc(sizeof(char) * 255);
+	u32 os_ver = osGetKernelVersion(), firm_ver = osGetKernelVersion();
+	OS_VersionBin *nver = (OS_VersionBin *)malloc(sizeof(OS_VersionBin)), *cver = (OS_VersionBin *)malloc(sizeof(OS_VersionBin));
+	s32 ret;
+	
+	snprintf(str_kernel, 255, "%lu.%lu-%lu",
+			GET_VERSION_MAJOR(os_ver),
+			GET_VERSION_MINOR(os_ver),
+			GET_VERSION_REVISION(os_ver)
+	);
+	
+	snprintf(str_ver, 255, "%lu.%lu-%lu",
+			GET_VERSION_MAJOR(firm_ver),
+			GET_VERSION_MINOR(firm_ver),
+			GET_VERSION_REVISION(firm_ver)
+	);
+				
+	memset(nver, 0, sizeof(OS_VersionBin));
+	memset(cver, 0, sizeof(OS_VersionBin));
+
+	if (R_FAILED(ret = osGetSystemVersionData(nver, cver)))
+		snprintf(str_sysver, 100, "0x%08liX", ret);
+	else
+		snprintf(str_sysver, 100, "%d.%d.%d-%d%c",
+			cver->mainver,
+			cver->minor,
+			cver->build,
+			nver->mainver,
+			getFirmRegion()
+		);
+	
+	if (version == 0)
+		return str_kernel;
+	else if (version == 1)
+		return str_ver;
+	else 
+		return str_sysver;
+}
+
 typedef struct {
 	u64 titleid;
 	char name[50];
 } TitleInfo;
-
-//get region
-const char * getRegion()
-{
-    const char *regions[] = 
-	{
-        "JPN",
-        "USA",
-        "EUR",
-        "AUS",
-        "CHN",
-        "KOR",
-        "TWN",
-        "Unknown"
-    };
-
-    CFGU_SecureInfoGetRegion(&region);
-
-    if (region < 7)
-        return regions[region];
-    else
-        return regions[7];
-}
 
 PrintConsole top, bottom;
 
@@ -372,23 +434,28 @@ CFGU_SecureInfoGetRegion(&region);
 
 int main()
 {
-	//int i = 0;
 	
 	//preliminary stuff
-	gfxInitDefault();
-	logInit();
-    cfguInit();
+	
+	char * vers="2.6.0";
+
+	initServices();
+	
 	consoleInit(GFX_TOP, &top);
 	consoleInit(GFX_BOTTOM, &bottom);
+	
 	consoleSelect(&bottom);
 	printf("\n\x1b[1;37m");
-	printf("\nWelcome to OCS for pirates!!!\nv 2.5.1\n\nMade by: \x1b[1;32mKartik\x1b[1;37m\nModified by: \x1b[1;32mxHR\x1b[1;37m\nfor\x1b[1;33m http://vk.com/3ds_cfw\x1b[1;37m\n\nSpecial Thanks to :\x1b[1;33m\nChromaryu\x1b[1;37m for testing\n\x1b[1;35mSmealum\x1b[1;37m and \x1b[1;33myellows8\x1b[1;37m for udsploit\n\x1b[1;36mTinivi\x1b[1;37m for safehax");
+	printf("\nWelcome to OCS for pirates!!!\nv %s\n\nMade by: \x1b[1;32mKartik\x1b[1;37m\nModified by: \x1b[1;32mxHR\x1b[1;37m\nfor\x1b[1;33m http://vk.com/3ds_cfw\x1b[1;37m\n\nSpecial Thanks to :\x1b[1;33m\nChromaryu\x1b[1;37m for testing\n\x1b[1;35mSmealum\x1b[1;37m and \x1b[1;33myellows8\x1b[1;37m for udsploit\n\x1b[1;36mTinivi\x1b[1;37m for safehax", vers);
 	consoleSelect(&top);
 	printf("\n\x1b[1;37m");
 	bool cfwflag = false;
-	acWaitInternetConnection();
 	
-    /*printf("* Region: %s\n", getRegion());*/
+	printf("\x1b[33;1m*\x1b[0m System version: \x1b[33;1m%s\n", getVersion(2));
+	
+	printf("\x1b[33;1m*\x1b[0m System region: \x1b[33;1m%s\n", getRegion());
+		
+	printf("\x1b[31;1m*\x1b[0m Screen type: \x1b[31;1m %s \n\x1b[0m", getScreenType());
 	
 	printf("\x1b[1;37m\n\n\n\--------------------------------------------------\n                 Press \x1b[1;32mA\x1b[1;37m to begin\n\n--------------------------------------------------\n\n\n");
 	
@@ -404,7 +471,7 @@ int main()
 	consoleSelect(&bottom);
 	consoleClear();
 	printf("\n\x1b[1;37m");
-	printf("\nWelcome to OCS for pirates!!!\nv 2.5.0\n\nMade by: \x1b[1;32mKartik\x1b[1;37m\nModified by: \x1b[1;32mxHR\x1b[1;37m\nfor\x1b[1;33m http://vk.com/3ds_cfw\x1b[1;37m");
+	printf("\nWelcome to OCS for pirates!!!\nv %s\n\nMade by: \x1b[1;32mKartik\x1b[1;37m\nModified by: \x1b[1;32mxHR\x1b[1;37m\nfor\x1b[1;33m http://vk.com/3ds_cfw\x1b[1;37m", vers);
 	consoleSelect(&top);
 	printf("\nChecking if cfw is installed\n");
 	Result ret = checkRunningCFW();
@@ -441,9 +508,7 @@ int main()
 				break;
 
 		}
-	httpcExit();
-	logExit();
-	gfxExit();
-    cfguExit();
-		
+
+	termServices();
+
 }

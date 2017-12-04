@@ -1,4 +1,4 @@
-# OCS (One Click Setup) 2.5.1 filibuster edition
+# OCS (One Click Setup) 2.6.0 filibuster edition
 ![Github latest downloads](https://img.shields.io/github/downloads/rashevskyv/ocs/total.svg)
 
 This is meant for 3ds users between firmware 9.0.0 to 11.3.0. It allows the users to go straight from stock to luma3ds with only 3 files on the sd card (if the user is using soundhax).
@@ -14,6 +14,7 @@ Nothing much is needed to use this, you just need to be between firmware 9.0.0 a
 * Stock to luma3ds within 5 minutes.
 * Inbuilt zip and 7z extractor using libarchive.
 * Install tickets for eshop themes for your region
+* 3dsident functions for detect system version, region and screen type 
 
 # Building
 
@@ -24,10 +25,12 @@ You also need to install liblzma and libarchive (you can find it in portlib fold
 
 Many thanks to Chromaryu for testing this app.
 
-Tinivi for safehax.
+**Tinivi** for safehax.
 
-Yellows8 and Smealum for udsploit.
+**Yellows8** and **Smealum** for udsploit.
 
-Smealum and others for ctrulib.
+**Smealum** and others for ctrulib.
 
-Kartikfor original ocs
+**Kartik** for original ocs
+
+**joel16** for 3DSident
