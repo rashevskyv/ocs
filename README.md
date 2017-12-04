@@ -5,6 +5,8 @@ This is meant for 3ds users between firmware 9.0.0 to 11.3.0. It allows the user
 
 # Usage
 
+<img src="https://github.com/rashevskyv/ocs/raw/master/ocs.png" alt="screenshot" height="500px">
+
 Nothing much is needed to use this, you just need to be between firmware 9.0.0 and 11.3.0. Get soundhax `.m4a`, `otherapp.bin` and `ocs.3dsx`. Rename `ocs.3dsx` to `boot.3dsx` and put it in the root of your sd card. 
 
 # Features
