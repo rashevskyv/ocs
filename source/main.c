@@ -446,7 +446,7 @@ int main()
 	
 	consoleSelect(&bottom);
 	printf("\n\x1b[1;37m");
-	printf("\nWelcome to OCS for pirates!!!\nv %s\n\nMade by: \x1b[1;32mKartik\x1b[1;37m\nModified by: \x1b[1;32mxHR\x1b[1;37m\nfor\x1b[1;33m http://vk.com/3ds_cfw\x1b[1;37m\n\nSpecial Thanks to :\x1b[1;33m\nChromaryu\x1b[1;37m for testing\n\x1b[1;35mSmealum\x1b[1;37m and \x1b[1;33myellows8\x1b[1;37m for udsploit\n\x1b[1;36mTinivi\x1b[1;37m for safehax", vers);
+	printf("\nWelcome to OCS for pirates!!!\nv%s\n\nMade by: \x1b[1;32mKartik\x1b[1;37m\nModified by: \x1b[1;32mxHR\x1b[1;37m\nfor\x1b[1;33m http://vk.com/3ds_cfw\x1b[1;37m\n\nSpecial Thanks to :\x1b[1;33m\nChromaryu\x1b[1;37m for testing\n\x1b[1;35mSmealum\x1b[1;37m and \x1b[1;33myellows8\x1b[1;37m for udsploit\n\x1b[1;36mTinivi\x1b[1;37m for safehax", vers);
 	consoleSelect(&top);
 	printf("\n\x1b[1;37m");
 	bool cfwflag = false;
