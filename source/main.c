@@ -12,6 +12,8 @@
 #include "fs.h"
 #include "jsmn.h"
 
+//#define _lite
+
 u8 region = 0;
 
 extern void progressbar(const char *string, double update, double total, bool progBarTotal);
@@ -247,49 +249,51 @@ void downloadExtractStep2()
 {	
 	progressbar("Total Progress:", 0, 15, true);
 	
-// hblauncher_loader
-	print("\n\n\x1b[1;37mDownloading \e[37;42mhblauncher_loader\e[m\n");
-	Result ret = httpDownloadData(parseApi("https://api.github.com/repos/yellows8/hblauncher_loader/releases/latest", ".zip"));//hblauncher_loader by yellows8
-	result("Download", ret, 15, 1);
-	archiveExtractFile(httpRetrieveData(), httpBufSize(), "hblauncher_loader.cia", "hblauncher_loader.cia", "/");
-	httpFree();
-	
-	u32 size;
-	u8 *data = fsOpenAndRead("hblauncher_loader.cia", &size);
-	printf("\nTrying to install hblauncher_loader.cia\n");
-	ciaInstall(data, size, 15, 1);
-	remove("hblauncher_loader.cia");
-	free(data);
-
 // HBL
 	print("\n\n\x1b[1;37mDownloading \e[37;42mboot.3dsx\e[m\n");
-	ret = httpDownloadData(parseApi("https://api.github.com/repos/fincs/new-hbmenu/releases/latest", ".3dsx"));// HBL by smealum & others
-	result("Download", ret, 15, 2);
+	Result ret = httpDownloadData(parseApi("https://api.github.com/repos/fincs/new-hbmenu/releases/latest", ".3dsx"));// HBL by smealum & others
+	result("Download", ret, 15, 1);
 	fsOpenAndWrite("/boot.3dsx",httpRetrieveData(), httpBufSize());
-	httpFree();
-	
-// FBI
-	print("\n\n\x1b[1;37mDownloading and Installing \e[37;42mFBI\e[m\n");
-	ret = httpDownloadData(parseApi("https://api.github.com/repos/steveice10/FBI/releases/latest", ".cia"));//FBI by steveice10
-	result("Download", ret, 15, 3);
-	ciaInstall(httpRetrieveData(), httpBufSize(), 15, 3);
-	httpFree();
-	
-// lumaupdater
-	print("\n\n\x1b[1;37mDownloading and Installing \e[37;42mlumaupdater\e[m\n");
-	ret = httpDownloadData(parseApi("https://api.github.com/repos/KunoichiZ/lumaupdate/releases/latest", ".cia")); //lumaupdater by hamcha & KunoichiZ
-	result("Download", ret, 15, 4);
-	ciaInstall(httpRetrieveData(), httpBufSize(), 15, 4);
 	httpFree();
 	
 // luma3ds data
 	print("\n\n\x1b[1;37mDownloading \e[37;42mluma3ds data\e[m\n");
 	remove("/luma/config.bin");
 	ret = httpDownloadData("https://github.com/rashevskyv/3ds/raw/master/files/luma.zip");
-	result("Download", ret, 15, 5);
+	result("Download", ret, 15, 2);
 	archiveExtractFile(httpRetrieveData(), httpBufSize(), "__ALL__", "__NOTUSED__", "__NOTUSED__");
 	httpFree();
 	
+#ifndef _lite	
+	
+// hblauncher_loader
+	print("\n\n\x1b[1;37mDownloading \e[37;42mhblauncher_loader\e[m\n");
+	ret = httpDownloadData(parseApi("https://api.github.com/repos/yellows8/hblauncher_loader/releases/latest", ".zip"));//hblauncher_loader by yellows8
+	result("Download", ret, 15, 3);
+	archiveExtractFile(httpRetrieveData(), httpBufSize(), "hblauncher_loader.cia", "hblauncher_loader.cia", "/");
+	httpFree();
+	
+	u32 size;
+	u8 *data = fsOpenAndRead("hblauncher_loader.cia", &size);
+	printf("\nTrying to install hblauncher_loader.cia\n");
+	ciaInstall(data, size, 15, 3);
+	remove("hblauncher_loader.cia");
+	free(data);
+	
+// FBI
+	print("\n\n\x1b[1;37mDownloading and Installing \e[37;42mFBI\e[m\n");
+	ret = httpDownloadData(parseApi("https://api.github.com/repos/steveice10/FBI/releases/latest", ".cia"));//FBI by steveice10
+	result("Download", ret, 15, 4);
+	ciaInstall(httpRetrieveData(), httpBufSize(), 15, 3);
+	httpFree();
+	
+// lumaupdater
+	print("\n\n\x1b[1;37mDownloading and Installing \e[37;42mlumaupdater\e[m\n");
+	ret = httpDownloadData(parseApi("https://api.github.com/repos/KunoichiZ/lumaupdate/releases/latest", ".cia")); //lumaupdater by hamcha & KunoichiZ
+	result("Download", ret, 15, 5);
+	ciaInstall(httpRetrieveData(), httpBufSize(), 15, 5);
+	httpFree();
+		
 // godmode9 and sripts
 	print("\n\n\x1b[1;37mDownloading \e[37;42mgodmode9\e[m\n");
 	ret = httpDownloadData(parseApi("https://api.github.com/repos/d0k3/GodMode9/releases/latest", ".zip"));// godmode9 by d0k3
@@ -331,6 +335,8 @@ void downloadExtractStep2()
 	ciaInstall(httpRetrieveData(), httpBufSize(), 15, 9);
 	httpFree();
 
+#endif	
+	
 // LumaLocaleSwitcher
 CFGU_SecureInfoGetRegion(&region);
 	if (region != 2) {
@@ -340,7 +346,9 @@ CFGU_SecureInfoGetRegion(&region);
 		result("Download", ret, 15, 10);
 		ciaInstall(httpRetrieveData(), httpBufSize(), 15, 10);
 		httpFree();
-		}
+}
+
+#ifndef _lite	
 
 // Checkpoint
 	print("\n\n\x1b[1;37mDownloading and Installing \e[37;42mCheckpoint\e[m\n");
@@ -374,6 +382,8 @@ CFGU_SecureInfoGetRegion(&region);
 	result("Download", ret, 15, 14);
 	archiveExtractFile(httpRetrieveData(), httpBufSize(), "__ALL__", "__NOTUSED__", "__NOTUSED__");
 	httpFree();
+	
+#endif	
 
 //installing tickets for menu themes
 	CFGU_SecureInfoGetRegion(&region);
@@ -437,7 +447,11 @@ int main()
 	
 	//preliminary stuff
 	
-	char * vers="2.6.0";
+	#ifdef _lite
+		char * vers="2.6.0 lite";
+	#else
+		char * vers="2.6.0";
+	#endif
 
 	initServices();
 	

@@ -1,13 +1,20 @@
 # OCS (One Click Setup) 2.6.0 filibuster edition
 ![Github latest downloads](https://img.shields.io/github/downloads/rashevskyv/ocs/total.svg)
 
+Пользователи с прошивкой между 9.0.0 и 11.3.0 с помощью этой программы могут очень легко и просто взломать консоль, буквально за пару кликов. 
+
 This is meant for 3ds users between firmware 9.0.0 to 11.3.0. It allows the users to go straight from stock to luma3ds with only 3 files on the sd card (if the user is using soundhax).
 
 # Usage
 
 <img src="https://github.com/rashevskyv/ocs/raw/master/ocs.png" alt="screenshot" height="500px">
 
-Nothing much is needed to use this, you just need to be between firmware 9.0.0 and 11.3.0. Get soundhax `.m4a`, `otherapp.bin` and `ocs.3dsx`. Rename `ocs.3dsx` to `boot.3dsx` and put it in the root of your sd card. 
+Используйте в паре с саундхакс на прошивках между 9.0.0 и 11.3.0 для взлома и установки дополнительного софта, либо используйте уже на взломаной консоли только для установки софта.
+
+Положите в корень карты памяти `.m4a` от soundhax, `otherapp.bin` пейлоадер от smealum и `boot.3dsx` из этого репозитория. 
+
+Use it with soundhax between firmware 9.0.0 to 11.3.0 for hacking your console and install all additional software. Or use it on CFW for install only. 
+Get soundhax `.m4a`, `otherapp.bin` and `ocs.3dsx`. Rename `ocs.3dsx` to `boot.3dsx` and put it in the root of your sd card. 
 
 # Features
 

@@ -36,7 +36,7 @@ APP_AUTHOR	:= 	Kartik & xHR
 APP_TITLE	:= 	OCS
 APP_DESCRIPTION	:= 	One Click Setup For 3ds -=filibuster edition=-
 #ROMFS		:=	romfs
-ICON := icon.png
+ICON 		:= icon.png
 
 #---------------------------------------------------------------------------------
 # options for code generation
@@ -132,6 +132,14 @@ endif
 
 .PHONY: $(BUILD) clean all
 
+#---------------------------------------------------------------------------------
+lite: $(BUILD)
+
+$(BUILD):
+	@[ -d $@ ] || mkdir -p $@
+	@$(MAKE) --no-print-directory -C $(BUILD) -f $(CURDIR)/Makefile
+ICON 		:= icon_lite.png
+	
 #---------------------------------------------------------------------------------
 all: $(BUILD)
 
