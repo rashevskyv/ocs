@@ -356,14 +356,23 @@ CFGU_SecureInfoGetRegion(&region);
 	result("Download", ret, 15, 11);
 	ciaInstall(httpRetrieveData(), httpBufSize(), 15, 11);
 	httpFree();
-	
+
+/*	
 // Themely
 	print("\n\n\x1b[1;37mDownloading and Installing \e[37;42mThemely\e[m\n");
 	ret = httpDownloadData(parseApi("https://api.github.com/repos/ErmanSayin/Themely/releases/latest", ".cia"));//Themely by ErmanSayin
 	result("Download", ret, 15, 12);
 	ciaInstall(httpRetrieveData(), httpBufSize(), 15, 12);
 	httpFree();
+*/
 
+// Anemone3DS
+	print("\n\n\x1b[1;37mDownloading and Installing \e[37;42mThemely\e[m\n");
+	ret = httpDownloadData(parseApi("https://api.github.com/repos/astronautlevel2/Anemone3DS/releases/latest", ".cia"));//Anemone3DS by astronautlevel2
+	result("Download", ret, 15, 12);
+	ciaInstall(httpRetrieveData(), httpBufSize(), 15, 12);
+	httpFree();
+	
 // freeshop
 	print("\n\n\x1b[1;37mDownloading \e[37;42mfreeshop\e[m\n");
 	ret = httpDownloadData("https://github.com/rashevskyv/3ds/raw/master/files/freeshop.zip");
@@ -448,9 +457,9 @@ int main()
 	//preliminary stuff
 	
 	#ifdef _lite
-		char * vers="2.6.0 lite";
+		char * vers="2.6.0-a lite";
 	#else
-		char * vers="2.6.0";
+		char * vers="2.6.0-a";
 	#endif
 
 	initServices();
