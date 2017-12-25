@@ -367,7 +367,7 @@ CFGU_SecureInfoGetRegion(&region);
 */
 
 // Anemone3DS
-	print("\n\n\x1b[1;37mDownloading and Installing \e[37;42mThemely\e[m\n");
+	print("\n\n\x1b[1;37mDownloading and Installing \e[37;42mAnemone3DS\e[m\n");
 	ret = httpDownloadData(parseApi("https://api.github.com/repos/astronautlevel2/Anemone3DS/releases/latest", ".cia"));//Anemone3DS by astronautlevel2
 	result("Download", ret, 15, 12);
 	ciaInstall(httpRetrieveData(), httpBufSize(), 15, 12);
